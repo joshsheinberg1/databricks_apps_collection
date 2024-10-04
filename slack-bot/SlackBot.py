@@ -12,6 +12,8 @@ def get_slack_auth():
     w = WorkspaceClient()
     token_app = w.dbutils.secrets.get(scope='slack-bot', key='slack_token_app')
     token_bot = w.dbutils.secrets.get(scope='slack-bot', key='slack_token_bot')
+    # token_app = os.environ["TOKEN_APP"]
+    # token_bot = os.environ["TOKEN_BOT"]
     return token_app, token_bot
 
 def start_slack_client():

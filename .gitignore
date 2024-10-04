@@ -1,0 +1,5 @@
+*.venv*
+*.env*
+*.databricks*
+*.DS_Store*
+.DS_Store

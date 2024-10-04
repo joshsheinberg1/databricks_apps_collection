@@ -5,3 +5,4 @@ flask
 flask-socketio
 slack_sdk
 sqlglot
+databricks-sdk
