@@ -1,0 +1,87 @@
+{% extends "main.html" %}        
+            {% block app_content_header %}             
+            <div class="app-content-header"> <!--begin::Container-->
+                <div class="container-fluid"> <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="mb-0">{{table_name}}</h3>
+                        </div>                        
+                    </div> <!--end::Row-->
+                </div> <!--end::Container-->
+            </div> <!--end::App Content Header--> <!--begin::App Content-->
+            
+            {% endblock%}
+            {% block app_content %}
+            <div class="app-content"> <!--begin::Container-->
+                <div id="alertPlaceholder"></div>
+                <div class="container-fluid"> <!--begin::Row-->
+                    <div class="row g-4"> <!--begin::Col-->
+                        <div class="col-md-12"> <!--begin::Quick Example-->
+                            <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
+                                <div class="card-header">
+                                    <div class="card-title">{{table_full_name}}</div>
+                                </div> <!--end::Header--> <!--begin::Form-->
+                                <form action="/tables/{{table_full_name}}" id="tableEditForm" method="POST"> <!--begin::Body-->
+                                    <div class="card-body">
+                                      {% for col in columns %}
+                                        <div class="mb-3"> 
+                                            <label for="exampleInputEmail1" class="form-label">{{col}}</label> 
+                                            <input type="text" class="form-control" id="id_{{col}}" name="name_{{col}}" aria-describedby="help_{{col}}">
+                                            {% if col in description %}
+                                              <div id="help_{{col}}" class="form-text">Type: {{col_types[col]}} - {{ description[col] }}</div>
+                                            {% else %}
+                                              <div id="help_{{col}}" class="form-text">Type: {{col_types[col]}}</div>
+                                            {% endif %}
+                                        </div>              
+                                      {% endfor %}                          
+                                    </div> <!--end::Body--> <!--begin::Footer-->
+                                    <div class="card-footer"> <button type="submit" class="btn btn-primary">Submit</button> </div> <!--end::Footer-->
+                                </form> <!--end::Form-->
+                            </div> <!--end::Quick Example--> <!--begin::Input Group-->
+                        </div> <!--end::Col--> <!--begin::Col-->
+                    </div> <!--end::Row-->
+                </div> <!--end::Container-->
+                
+            </div> <!--end::App Content-->
+                            
+            <script>
+                let tableEditForm = document.getElementById("tableEditForm");
+                const alertPlaceholder = document.getElementById('alertPlaceholder')
+                const appendAlert = (message, type) => {
+                    console.log("appendAlert")
+                    const wrapper = document.createElement('div')
+                    wrapper.innerHTML = [
+                        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                        `   <div>${message}</div>`,
+                        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                        '</div>'
+                    ].join('')  
+                    alertPlaceholder.append(wrapper)
+                }
+
+                tableEditForm.addEventListener("submit", (e) => {                
+                  e.preventDefault();
+                  var xhr = new XMLHttpRequest();
+                  xhr.responseType = 'json';
+                  xhr.open("POST", "/tables/{{table_full_name}}"); 
+                  xhr.onload = function(event){ 
+                      console.log("Success, server responded with: " + event.target.response); // raw response
+                      // jresponse = event.target.response.json()
+                      response = event.target.response
+                      if(response.status=="StatementState.SUCCEEDED"){
+                        appendAlert("<b>Success!<b>" + " </br> " + response.msg, 'success')
+                      } else {
+                        appendAlert(response.code + " </br> " + response.msg, 'danger')
+                      }
+                  }; 
+                  // or onerror, onabort
+                  var formData = new FormData(tableEditForm); 
+                  console.log("Form data:", formData)
+                  xhr.send(formData);
+
+                  console.log("Submit action")
+                });                
+
+            </script>            
+            {% endblock %}        
+        

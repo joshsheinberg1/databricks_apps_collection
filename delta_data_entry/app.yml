@@ -1,0 +1,26 @@
+# command:
+# - gunicorn
+# - -w
+# - '4'
+# - DeltaDataEntry:app
+
+# command:
+# - flask
+# - run
+# env:
+#   - name: FLASK_APP
+#     value: DeltaDataEntry
+#   - name: FLASK_ENV
+#     value: development 
+
+command: [
+  "flask",
+  "--app",
+  "DeltaDataEntry.py",
+  "run"
+]
+env:
+  - name: TABLE_FULL_NAME
+    value: "default.wgutest.student_enrollment"
+  - name: WAREHOUSE_ID
+    value: "475b94ddc7cd5211" 

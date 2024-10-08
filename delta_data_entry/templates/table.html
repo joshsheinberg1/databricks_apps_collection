@@ -1,0 +1,49 @@
+{% extends "main.html" %}        
+            {% block app_content_header %} 
+            <div class="app-content-header"> <!--begin::Container-->
+                <div class="container-fluid"> <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="mb-0">Table: {{table_name}}</h3>
+                        </div>                        
+                    </div> <!--end::Row-->
+                </div> <!--end::Container-->
+            </div> <!--end::App Content Header--> <!--begin::App Content-->
+            {% endblock %}
+            {% block app_content %}
+            <div class="app-content" style="overflow: hidden;"> <!--begin::Container-->
+                <!-- Content -->
+                    <div class="row">
+                        <div class="col-md-12">                            
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{table_full_name}}</h3>
+                                </div> <!-- /.card-header -->
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                              <th style="width: 10px">#</th>
+                                              {% for key in columns %}                                                
+                                                <th>{{key}}</th>                                                
+                                              {% endfor %} 
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                            
+                                            {% for value in data %}
+                                            <tr class="align-middle">
+                                              <td>{{loop.index}}</td>                                              
+                                              {% for key in columns%}                                                                                              
+                                                <td>{{value[loop.index - 1]}}</td>                                              
+                                              {% endfor %}
+                                            </tr>
+                                            {% endfor %}                                            
+                                        </tbody>
+                                    </table>
+                                </div> <!-- /.card-body -->
+                            </div> <!-- /.card -->
+                        </div> <!-- /.col -->
+                    </div> <!--end::Row-->
+            </div> <!--end::App Content-->
+            {% endblock %}
+
