@@ -1,2 +1,2 @@
-# lakehouse_apps_utils
-Lakehouse Utils is Collection of Small Lakehouse Apps to help customers with additional features that enhances Databricks Platform
+# Databricks apps collections
+Databricks apps collection is a repository to store small Databricks apps to help users with additional features that enhances Databricks Platform
