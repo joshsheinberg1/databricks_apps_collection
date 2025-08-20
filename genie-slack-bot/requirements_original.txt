@@ -5,5 +5,3 @@ flask
 flask-socketio
 slack_sdk
 databricks-sdk
-pandas
-tabulate
